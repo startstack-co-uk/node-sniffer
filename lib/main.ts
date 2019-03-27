@@ -14,7 +14,7 @@ export const tracker = createParamDecorator((data, req) => {
 
 
 export const initialize = (dbpath: string, app: any) => {
-  const paths: any[] = listEndpoints(app.getHttpAdapter().getInstance());
+  const paths: any[] = listEndpoints(app);
   init(dbpath, paths);
 }
 
