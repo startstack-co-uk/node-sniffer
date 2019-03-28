@@ -4,7 +4,7 @@
   "description": "",
   "main": "main.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "Bhfreagra",
   "license": "ISC",
@@ -16,5 +16,25 @@
     "rxjs": "^6.4.0",
     "sqlite3": "^4.0.6",
     "typescript": "^3.3.4000"
+  },
+  "devDependencies": {
+    "@nestjs/testing": "^6.0.4",
+    "@types/jest": "^24.0.11",
+    "jest": "^24.5.0",
+    "ts-jest": "^24.0.0"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "tests",
+    "testRegex": ".test.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node"
   }
 }

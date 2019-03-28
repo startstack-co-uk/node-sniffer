@@ -17,7 +17,8 @@ interface DbEntrySchema {
 }
 
 
-export function init(dbpath: string, paths: any[]): void {
+export function init( paths: any[]): void {
+  const dbpath: string = "src/data.sqlite";
   backupDb = new sqlite3.Database(dbpath, (err) => {
     if (err) {
       throw err;
@@ -31,9 +32,9 @@ export function init(dbpath: string, paths: any[]): void {
         )
       `,undefined, async(err) => {
         if(err){ throw err;}
-        let query = "BEGIN TRANSACTION;"; 
+        let query: string = "BEGIN TRANSACTION;"; 
         paths = await paths.map((data) => {
-          const toInsert = `insert into requests(path, method, count)
+          const toInsert: string = `insert into requests(path, method, count)
             select "${data.path}","${data.methods[0]}", 0
             where not exists (select 1 from requests where path="${data.path}" and method="${data.methods[0]}");`;
           return toInsert;
@@ -46,7 +47,7 @@ export function init(dbpath: string, paths: any[]): void {
 }
 
 
-async function insertToTable(entry: DbEntrySchema) {
+async function insertToTable(entry: DbEntrySchema): Promise<void>{
   const result = await backupDb.run(`
     insert into requests (path, method, count) 
     values ("${entry.path}", "${entry.method}", "${entry.count}")`,undefined, (err) => {
@@ -57,7 +58,7 @@ async function insertToTable(entry: DbEntrySchema) {
 }
 
 
-async function updateTableEntry(entry: DbEntrySchema) {
+async function updateTableEntry(entry: DbEntrySchema): Promise<void>{
   let result = await backupDb.run(`
   Update requests
   set count = ${entry.count} where path = "${entry.path}" and method = "${entry.method}"
@@ -70,7 +71,7 @@ async function updateTableEntry(entry: DbEntrySchema) {
 
 
 export function track(entry: RequestSchema): void {
-  const sql = `select * from requests where path="${entry.path}" and method="${entry.method}"`;
+  const sql: string = `select * from requests where path="${entry.path}" and method="${entry.method}"`;
   backupDb.get(sql,undefined, (err, row) => {
     if(!row){
       const newEntry: DbEntrySchema = { ...entry, count:0};
@@ -84,7 +85,7 @@ export function track(entry: RequestSchema): void {
 
 // FOLLOWING ARE METHODS TO QUERY DATA
 
-export async function getTotal(){
+export async function getTotal(): Promise< {total: number}[]>{
   return new BirdPromise((resolve, reject) => {
     backupDb.all(_totalTracking, [], (err, rows) => {
       if(err){
@@ -93,11 +94,10 @@ export async function getTotal(){
       resolve(rows);
     });
   })
-
 }
 
 
-export function getTotalPerMethod(){
+export async function getTotalPerMethod(): Promise<{method:string, total:number}[]>{
   return new BirdPromise((resolve, reject) => {
     backupDb.all(_totalPerMethod, [], (err, result) => {
       if(err){
@@ -109,7 +109,7 @@ export function getTotalPerMethod(){
 }
 
 
-export function getTotalPerPath(){
+export async function getTotalPerPath(): Promise<{path:string, total:number}[]>{
   return new BirdPromise((resolve, reject) => {
     backupDb.all(_totalPerPath, [], (err, result) => {
       if(err){
@@ -121,9 +121,9 @@ export function getTotalPerPath(){
 }
 
 
-export function getTotalPerCombo(path: string, method: string){
-  let splitQuery = _totalPerPathMethodCombo.split('?');
-  let modifiedQuery = splitQuery[0] + path + splitQuery[1] + method + splitQuery[2];
+export async function getTotalPerCombo(path: string, method: string): Promise<{path: string, method: string, total: number}[]>{
+  let splitQuery: string[] = _totalPerPathMethodCombo.split('?');
+  let modifiedQuery: string = splitQuery[0] + path + splitQuery[1] + method + splitQuery[2];
   return new BirdPromise((resolve, reject) => {
     backupDb.all(modifiedQuery, [], (err, result) => {
       if(err){

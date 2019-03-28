@@ -4,7 +4,8 @@ import * as listEndpoints from 'express-list-endpoints';
 
 
 export const tracker = createParamDecorator((data, req) => {
-  const incoming = req.route;
+  // type any because otherwise you need to specify the whole structure of the route obj
+  const incoming: any = req.route;  
   const dbEntry: RequestSchema = {
     path: incoming.path,
     method: incoming.stack[0].method.toUpperCase()
@@ -13,27 +14,26 @@ export const tracker = createParamDecorator((data, req) => {
 })
 
 
-export const initialize = (dbpath: string, app: any) => {
-  const paths: any[] = listEndpoints(app);
-  init(dbpath, paths);
+export const initialize = ( app: any) => {
+  init(listEndpoints(app));
 }
 
 
-export const getAllRequests = async() => {
+export const getAllRequests = async(): Promise<{total: number}[]> => {
   return await getTotal();
 }
 
 
-export const getRequestsPerMethod = async() => {
+export const getRequestsPerMethod = async(): Promise<{method: string, total: number}[]> => {
   return await getTotalPerMethod();
 }
 
 
-export const getRequestsPerPath = async() => {
+export const getRequestsPerPath = async(): Promise<{path: string, total: number}[]> => {
   return await getTotalPerPath();
 }
 
 
-export const getTotalPerPathMethodCombo = async(path: string, method: string) => {
+export const getTotalPerPathMethodCombo = async(path: string, method: string): Promise<{path:string, method:string, total:number}[]> => {
   return await getTotalPerCombo(path, method);
 }

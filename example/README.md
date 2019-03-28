@@ -49,7 +49,7 @@ Just import **tracker*** from **simple-request-tracker** and give it as a parame
 	> Returns an array of objects , where each object has a **method** key ('GET', 'POST', etc.) and a **count** key that represents the total requests tracked with that method.
 - getRequestsPerPath()
 	> Returns an array of objects, where each object has a **path** key  for the path tracked and a **count** key that represents the total requests tracked for that path
-- getTotalPerPathMethodCombo()
+- getTotalPerPathMethodCombo(path, method)
 	> Returns an array of objects containing a **path** key for the path tracked , a **method** key for the method of that path and a **count** key for the number of requests with the corresponding path tracked.
 
 
