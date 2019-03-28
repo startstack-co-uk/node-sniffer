@@ -2,7 +2,7 @@
   "name": "simple-request-tracker",
   "version": "1.0.0",
   "description": "",
-  "main": "main.ts",
+  "main": "./lib/main.ts",
   "scripts": {
     "test": "jest"
   },
@@ -29,7 +29,7 @@
       "json",
       "ts"
     ],
-    "rootDir": "tests",
+    "rootDir": "./lib/tests",
     "testRegex": ".test.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"

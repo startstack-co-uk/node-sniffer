@@ -6,6 +6,6 @@ import { initialize } from 'simple-request-tracker';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   await app.listen(3000);
-  initialize(__dirname + '/data.sqlite', app.getHttpAdapter().getInstance());
+  initialize( app.getHttpAdapter().getInstance());
 }
 bootstrap();

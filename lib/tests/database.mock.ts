@@ -50,7 +50,7 @@ export function init( paths: any[]): void {
   const dbpath: string = "src/data.sqlite";
   const Db = new sqlite3.Database(dbpath, (err) => {
     if (err) {
-      throw err;
+    
     } else {
       backupDb.run(`
         create table if not exists requests(
