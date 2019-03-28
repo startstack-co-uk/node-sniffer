@@ -6,6 +6,10 @@ export class MockDbProvider{
 
     constructor(){}
 
+    init(app): void{
+        // it's suposed to initiate the db connection
+    }
+
     async getTotal(): Promise<{total: number}[]>{
         return [
             {total: 5}

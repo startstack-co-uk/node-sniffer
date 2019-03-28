@@ -3,9 +3,18 @@ import * as Main from '../main';
 import { MockDbProvider } from './database.service.mock'
 
 
-describe('database.service', () => {
+describe('main.ts', () => {
   
     const mockDb = new MockDbProvider();
+
+    describe('initialize', () => {
+      it('should initialize the connection to the db', () => {
+        const param = 'custom';
+        jest.spyOn(Main, 'initialize').mockImplementation((param) => {mockDb.init(param)});
+        expect(Main.initialize(param)).toBe(undefined);
+      })
+    })
+
 
     describe('getAllRequests', () => {
       it('should return an array with the total number of requests tracked', async() => {

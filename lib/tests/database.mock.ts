@@ -1,25 +1,54 @@
-import * as sqlite3 from 'sqlite3';
 import * as BirdPromise from 'bluebird';
-import { _totalTracking, _totalPerMethod, _totalPerPath, _totalPerPathMethodCombo} from './enums/queries.enum';
+import * as sqlite3 from 'sqlite3';
 
-let backupDb;
-let backupDbTable;
+const _totalTracking = 'total';
+const _totalPerMethod = 'method';
+const _totalPerPath = 'path';
+const _totalPerPathMethodCombo = 'combo';
 
 export interface RequestSchema {
   path: string;
   method: string;
 }
 
-interface DbEntrySchema {
+export interface DbEntrySchema {
   path: string;
   method: string;
   count: number;
 }
 
+const backupDb = {
+
+    run : (query: string, args: any[], fn) => {
+        fn(undefined);
+    },
+
+    get : (query: string, args: any[], fn) => {
+        fn(undefined,[{path: '/', method: 'GET', total: 10}]);
+    },
+
+    all : (query: string, args: any[], fn) => {
+        if(query === 'path'){
+            fn(undefined, [{path:'/', total: 10}])
+        }else if(query === 'method'){
+            fn(undefined, [{method: 'GET', total: 10}])
+        }else if(query === 'total'){
+            fn(undefined, [{total: 10}])
+        }else{
+            fn(undefined, [{path: '/', method: 'GET', total: 10}])
+        }  
+    },
+
+    exec : (query, fn) => {
+        fn(undefined);
+    }
+
+}
+
 
 export function init( paths: any[]): void {
   const dbpath: string = "src/data.sqlite";
-  backupDb = new sqlite3.Database(dbpath, (err) => {
+  const Db = new sqlite3.Database(dbpath, (err) => {
     if (err) {
       throw err;
     } else {
@@ -86,53 +115,52 @@ export function track(entry: RequestSchema): void {
   })
 }
 
-// FOLLOWING ARE METHODS TO QUERY DATA
 
 export async function getTotal(): Promise< {total: number}[]>{
-  return new BirdPromise((resolve, reject) => {
-    backupDb.all(_totalTracking, [], (err, rows) => {
-      if(err){
-        reject(err);
-      }
-      resolve(rows);
-    });
-  })
-}
-
-
-export async function getTotalPerMethod(): Promise<{method:string, total:number}[]>{
-  return new BirdPromise((resolve, reject) => {
-    backupDb.all(_totalPerMethod, [], (err, result) => {
-      if(err){
-        reject(err);
-      }
-      resolve(result);
+    return new BirdPromise((resolve, reject) => {
+      backupDb.all(_totalTracking, [], (err, rows) => {
+        if(err){
+          reject(err);
+        }
+        resolve(rows);
+      });
     })
-  })
-}
-
-
-export async function getTotalPerPath(): Promise<{path:string, total:number}[]>{
-  return new BirdPromise((resolve, reject) => {
-    backupDb.all(_totalPerPath, [], (err, result) => {
-      if(err){
-        reject(err);
-      }
-      resolve(result);
+  }
+  
+  
+  export async function getTotalPerMethod(): Promise<{method:string, total:number}[]>{
+    return new BirdPromise((resolve, reject) => {
+      backupDb.all(_totalPerMethod, [], (err, result) => {
+        if(err){
+          reject(err);
+        }
+        resolve(result);
+      })
     })
-  })
-}
-
-
-export async function getTotalPerCombo(path: string, method: string): Promise<{path: string, method: string, total: number}[]>{
-  let splitQuery: string[] = _totalPerPathMethodCombo.split('?');
-  let modifiedQuery: string = splitQuery[0] + path + splitQuery[1] + method + splitQuery[2];
-  return new BirdPromise((resolve, reject) => {
-    backupDb.all(modifiedQuery, [], (err, result) => {
-      if(err){
-        reject(err);
-      }
-      resolve(result);
+  }
+  
+  
+  export async function getTotalPerPath(): Promise<{path:string, total:number}[]>{
+    return new BirdPromise((resolve, reject) => {
+      backupDb.all(_totalPerPath, [], (err, result) => {
+        if(err){
+          reject(err);
+        }
+        resolve(result);
+      })
     })
-  })
-}
+  }
+  
+  
+  export async function getTotalPerCombo(path: string, method: string): Promise<{path: string, method: string, total: number}[]>{
+    let splitQuery: string[] = _totalPerPathMethodCombo.split('?');
+    let modifiedQuery: string = splitQuery[0] + path + splitQuery[1] + method + splitQuery[2];
+    return new BirdPromise((resolve, reject) => {
+      backupDb.all(modifiedQuery, [], (err, result) => {
+        if(err){
+          reject(err);
+        }
+        resolve(result);
+      })
+    })
+  }
