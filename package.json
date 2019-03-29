@@ -1,9 +1,11 @@
 {
   "name": "simple-request-tracker",
-  "version": "0.0.3",
+  "version": "0.0.7",
   "description": "",
-  "main": "main.ts",
+  "main": "./dist/main.js",
+  "types": "./dist/main.d.ts",
   "scripts": {
+    "build": "tsc",
     "test": "jest"
   },
   "author": "Bhfreagra",
