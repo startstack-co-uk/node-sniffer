@@ -1,6 +1,6 @@
 # simple-request-tracker
 
-**rest-mini-tracker** is a minimal package for keeping records of your API calls and gives simple analytics about them.
+**simple-request-tracker** is a minimal package for keeping records of your API calls and gives simple analytics about them.
 It provides a rather simple initialization process and uses the concept of [decorators](https://www.typescriptlang.org/docs/handbook/decorators.html) to keep **track*** of requests you specify by storing them on a [SQLite](https://www.sqlite.org/index.html) file.
 
 
