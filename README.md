@@ -63,6 +63,3 @@ Just import **tracker*** from **simple-request-tracker** and give it as a parame
 - [Valdio Veliu](https://github.com/valdio)
 
 
-## Acknowledgments
-Development of this module is sponsored by [StartStack](https://startstack.co.uk/).
-

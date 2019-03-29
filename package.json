@@ -2,14 +2,15 @@
   "name": "simple-request-tracker",
   "version": "0.0.1",
   "description": "",
-  "main": "./lib/main.ts",
+  "main": "main.ts",
   "scripts": {
     "test": "jest"
   },
   "author": "Bhfreagra",
   "license": "ISC",
   "dependencies": {
-    "@nestjs/common": "^6.0.2",
+    "@nestjs/common": "^6.0.4",
+    "@nestjs/core": "^6.0.4",
     "bluebird": "^3.5.3",
     "express-list-endpoints": "^4.0.0",
     "reflect-metadata": "^0.1.13",
@@ -26,11 +27,11 @@
   "jest": {
     "moduleFileExtensions": [
       "js",
-      "json",
-      "ts"
+      "ts",
+      "json"
     ],
-    "rootDir": "./lib/tests",
-    "testRegex": ".test.ts$",
+    "rootDir": "./tests",
+    "testRegex": ".(test|spec).ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },

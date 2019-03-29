@@ -1,68 +1,75 @@
-# simple-request-tracker
+<p align="center">
+  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
+</p>
 
-**rest-mini-tracker** is a minimal package for keeping records of your API calls and gives simple analytics about them.
-It provides a rather simple initialization process and uses the concept of [decorators](https://www.typescriptlang.org/docs/handbook/decorators.html) to keep **track*** of requests you specify by storing them on a [SQLite](https://www.sqlite.org/index.html) file.
+[travis-image]: https://api.travis-ci.org/nestjs/nest.svg?branch=master
+[travis-url]: https://travis-ci.org/nestjs/nest
+[linux-image]: https://img.shields.io/travis/nestjs/nest/master.svg?label=linux
+[linux-url]: https://travis-ci.org/nestjs/nest
+  
+  <p align="center">A progressive <a href="http://nodejs.org" target="blank">Node.js</a> framework for building efficient and scalable server-side applications, heavily inspired by <a href="https://angular.io" target="blank">Angular</a>.</p>
+    <p align="center">
+<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
+<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
+<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/dm/@nestjs/core.svg" alt="NPM Downloads" /></a>
+<a href="https://travis-ci.org/nestjs/nest"><img src="https://api.travis-ci.org/nestjs/nest.svg?branch=master" alt="Travis" /></a>
+<a href="https://travis-ci.org/nestjs/nest"><img src="https://img.shields.io/travis/nestjs/nest/master.svg?label=linux" alt="Linux" /></a>
+<a href="https://coveralls.io/github/nestjs/nest?branch=master"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#5" alt="Coverage" /></a>
+<a href="https://gitter.im/nestjs/nestjs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=body_badge"><img src="https://badges.gitter.im/nestjs/nestjs.svg" alt="Gitter" /></a>
+<a href="https://opencollective.com/nest#backer"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
+<a href="https://opencollective.com/nest#sponsor"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
+  <a href="https://paypal.me/kamilmysliwiec"><img src="https://img.shields.io/badge/Donate-PayPal-dc3d53.svg"/></a>
+  <a href="https://twitter.com/nestframework"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
+</p>
+  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
+  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
+## Description
 
+[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-## Types of analytics
-- Total number of requests tracked
-- Total number of requests by method type
-- Total number of requests by route
-- Total number of requests for specific path with specific method
+## Installation
 
+```bash
+$ npm install
+```
 
-## Installing
+## Running the app
 
+```bash
+# development
+$ npm run start
 
-## Usage
+# watch mode
+$ npm run start:dev
 
-    import { tracker } from 'simple-request-tracker'
+# production mode
+$ npm run start:prod
+```
 
-## Setting up
-    initialize(__dirname +  '/data.sqlite', app.getHttpAdapter().getInstance()); // for NestJS
+## Test
 
-The first argument is the path were your database will be created and the second the http adapter instance.
+```bash
+# unit tests
+$ npm run test
 
-    initialize(__dirname +  '/data.sqlite', app); // for ExpressJs
+# e2e tests
+$ npm run test:e2e
 
-## Tracking a route
+# test coverage
+$ npm run test:cov
+```
 
-    import { tracker } from 'simple-request-tracker'
-    
-    @Get()
-    async  getHello(@tracker() track):  Promise<string> {
-    	return  this.appService.getHello();
-    }
+## Support
 
-Just import **tracker*** from **simple-request-tracker** and give it as a parameter to the route handler. Don't forget the **@** sign before the tracker method, which signifies that this is a decorator method.
+Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
-## API
+## Stay in touch
 
-- initialize( path, httpAdapter)
-	> Is used to inisiate the mapping process for the available routes. The **path** parameter is the location to create the sqlite database file. The **httpAdapter** parameter is the instance of the routing adapter.
-- tracker()
-	> An http parameter function that catches the request on the specified path and passes it down to increment the request count on that route.
-- getAllRequests()
-	> Returns an object with key **total**, which is the total number of requests tracked
-- getRequestsPerMethod()
-	> Returns an array of objects , where each object has a **method** key ('GET', 'POST', etc.) and a **count** key that represents the total requests tracked with that method.
-- getRequestsPerPath()
-	> Returns an array of objects, where each object has a **path** key  for the path tracked and a **count** key that represents the total requests tracked for that path
-- getTotalPerPathMethodCombo(path, method)
-	> Returns an array of objects containing a **path** key for the path tracked , a **method** key for the method of that path and a **count** key for the number of requests with the corresponding path tracked.
+- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
+- Website - [https://nestjs.com](https://nestjs.com/)
+- Twitter - [@nestframework](https://twitter.com/nestframework)
 
+## License
 
-## Future features
-- Getting time based anlytics ( daily, weekly, monthly, yearly)
-- Adding test cases
-
-
-## Contributors
-- [Ergi Bërdëllima](https://github.com/Bhfreagra) 
-- [Valdio Veliu](https://github.com/valdio)
-
-
-## Acknowledgments
-Development of this module is sponsored by [StartStack](https://startstack.co.uk/).
-
+  Nest is [MIT licensed](LICENSE).

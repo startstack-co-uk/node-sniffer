@@ -16,8 +16,7 @@ describe('AppController', () => {
 
   describe('root', () => {
     it('should return "Hello World!"', () => {
-      const useless = () => {};  //because it doesn't actually require an argument
-      expect(appController.getHello(useless)).toBe('Hello World!');
+      expect(appController.getHello()).toBe('Hello World!');
     });
   });
 });

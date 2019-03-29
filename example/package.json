@@ -2,7 +2,7 @@
   "name": "example",
   "version": "0.0.0",
   "description": "description",
-  "author": "Bhfreagra",
+  "author": "",
   "license": "MIT",
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
@@ -25,7 +25,7 @@
     "reflect-metadata": "^0.1.12",
     "rimraf": "^2.6.2",
     "rxjs": "^6.2.2",
-    "simple-request-tracker": "file:../",
+    "simple-request-tracker": "file:..",
     "typescript": "^3.0.1"
   },
   "devDependencies": {
