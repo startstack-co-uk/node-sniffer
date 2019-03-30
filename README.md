@@ -60,11 +60,8 @@ The first argument is the path were your database will be created and the second
     import { tracker } from 'simple-request-tracker'
     
     @Get()
-    
     async getHello(@tracker() track): Promise<string> {
-    
-    return this.appService.getHello();
-    
+        return this.appService.getHello();
     }
 
   
@@ -107,8 +104,6 @@ Just import **tracker*** from **simple-request-tracker** and give it as a parame
 ## Future features
 
 - Getting time based anlytics ( daily, weekly, monthly, yearly)
-
-- Adding test cases
 
   
   

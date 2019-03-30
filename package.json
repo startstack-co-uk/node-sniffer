@@ -1,6 +1,6 @@
 {
   "name": "simple-request-tracker",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "",
   "main": "./dist/main.js",
   "types": "./dist/main.d.ts",
@@ -9,6 +9,10 @@
     "test": "jest"
   },
   "author": "Bhfreagra",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/startstack-co-uk/simple-request-tracker.git"
+  },
   "license": "ISC",
   "dependencies": {
     "@nestjs/common": "^6.0.4",
