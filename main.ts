@@ -1,5 +1,5 @@
 import { createParamDecorator } from '@nestjs/common';
-import { track, RequestSchema, init, getTotal, getTotalPerPath, getTotalPerMethod, getTotalPerCombo } from './database.service';
+import { track, RequestSchema, init, getTotal, getTotalPerPath, getTotalPerMethod, getTotalPerCombo, getDatabaseAnalytics } from './database.service';
 import * as listEndpoints from 'express-list-endpoints';
 
 
@@ -34,3 +34,6 @@ export async function getTotalPerPathMethodCombo(path:string, method: string): P
     return await getTotalPerCombo(path, method);
 }
 
+export async function getDbAnalytics(): Promise<{result:{totalRows:number, tracked:number, tableSize:number, dbSize:number}}>{
+    return await getDatabaseAnalytics();
+}

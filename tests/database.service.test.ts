@@ -62,4 +62,18 @@ describe('database.sevice.ts', () => {
             expect(service.init(directory,paths)).toEqual(new Promise((resolve, reject) => resolve({})));
         })
     })
+
+
+    describe('getDatabaseAnalytics', () => {
+        it('should return an object with statistics about the db', async() => {
+            const result = {result:{
+                totalRows: 10,
+                tracked : 10,
+                tableSize: 10,
+                dbSize: 10
+            } }
+            jest.spyOn(service, 'getDatabaseAnalytics').mockImplementation(async() => {return await mockDb.getDatabaseAnalytics()});
+            expect(await service.getDatabaseAnalytics()).toEqual(result);
+        })
+    })
 })

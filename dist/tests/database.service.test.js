@@ -59,5 +59,17 @@ describe('database.sevice.ts', () => {
             expect(service.init(directory, paths)).toEqual(new Promise((resolve, reject) => resolve({})));
         });
     });
+    describe('getDatabaseAnalytics', () => {
+        it('should return an object with statistics about the db', () => __awaiter(this, void 0, void 0, function* () {
+            const result = { result: {
+                    totalRows: 10,
+                    tracked: 10,
+                    tableSize: 10,
+                    dbSize: 10
+                } };
+            jest.spyOn(service, 'getDatabaseAnalytics').mockImplementation(() => __awaiter(this, void 0, void 0, function* () { return yield mockDb.getDatabaseAnalytics(); }));
+            expect(yield service.getDatabaseAnalytics()).toEqual(result);
+        }));
+    });
 });
 //# sourceMappingURL=database.service.test.js.map

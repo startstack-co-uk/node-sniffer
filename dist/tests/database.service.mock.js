@@ -46,6 +46,17 @@ class MockDbProvider {
                 ] };
         });
     }
+    getDatabaseAnalytics() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const result = {
+                totalRows: 4,
+                tracked: 1,
+                tableSize: 10,
+                dbSize: 10
+            };
+            return { result: result };
+        });
+    }
 }
 exports.MockDbProvider = MockDbProvider;
 //# sourceMappingURL=database.service.mock.js.map

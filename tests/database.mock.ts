@@ -5,6 +5,7 @@ const _totalTracking = 'total';
 const _totalPerMethod = 'method';
 const _totalPerPath = 'path';
 const _totalPerPathMethodCombo = 'combo';
+const _dbAnalytics = 'db';
 
 export interface RequestSchema {
   path: string;
@@ -24,6 +25,9 @@ const backupDb = {
     },
 
     get : (query: string, args: any[], fn) => {
+        if(query === 'db'){
+          fn(undefined, {trackedRoutes: 10, totalRoutes: 10});
+        }
         fn(undefined,{result: [{path: '/', method: 'GET', total: 10}]});
     },
 
@@ -139,3 +143,21 @@ export async function getTotal(): Promise< {result:{total: number}[]}>{
       })
     })
   }
+
+
+  export async function getDatabaseAnalytics(): Promise<{result:{totalRows:number, tracked:number, tableSize:number, dbSize:number}}>{
+    return new BirdPromise((resolve, reject) => {
+        backupDb.get(_dbAnalytics, undefined, (err, row) => {
+            if(err){
+                reject(err);
+            }
+            const result = {
+              totalRows: 10,
+              tracked : 10,
+              tableSize: 10,
+              dbSize: 10
+            };
+            resolve({result: result});
+        })
+    })
+}

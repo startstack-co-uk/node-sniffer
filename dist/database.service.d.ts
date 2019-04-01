@@ -28,3 +28,11 @@ export declare function getTotalPerCombo(path: string, method: string): Promise<
         total: number;
     }[];
 }>;
+export declare function getDatabaseAnalytics(): Promise<{
+    result: {
+        totalRows: number;
+        tracked: number;
+        tableSize: number;
+        dbSize: number;
+    };
+}>;

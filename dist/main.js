@@ -50,4 +50,10 @@ function getTotalPerPathMethodCombo(path, method) {
     });
 }
 exports.getTotalPerPathMethodCombo = getTotalPerPathMethodCombo;
+function getDbAnalytics() {
+    return __awaiter(this, void 0, void 0, function* () {
+        return yield database_service_1.getDatabaseAnalytics();
+    });
+}
+exports.getDbAnalytics = getDbAnalytics;
 //# sourceMappingURL=main.js.map

@@ -25,4 +25,12 @@ export declare class MockDbProvider {
             total: number;
         }[];
     }>;
+    getDatabaseAnalytics(): Promise<{
+        result: {
+            totalRows: number;
+            tracked: number;
+            tableSize: number;
+            dbSize: number;
+        };
+    }>;
 }

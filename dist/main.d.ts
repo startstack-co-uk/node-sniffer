@@ -24,3 +24,11 @@ export declare function getTotalPerPathMethodCombo(path: string, method: string)
         total: number;
     }[];
 }>;
+export declare function getDbAnalytics(): Promise<{
+    result: {
+        totalRows: number;
+        tracked: number;
+        tableSize: number;
+        dbSize: number;
+    };
+}>;

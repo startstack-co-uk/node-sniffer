@@ -39,4 +39,14 @@ export class MockDbProvider{
             {path:'/', method:'GET', total:10},
           ]};
     }
+
+    async getDatabaseAnalytics(): Promise<{result:{totalRows:number, tracked:number, tableSize:number, dbSize:number}}>{
+        const result = {
+            totalRows: 4,
+            tracked : 1,
+            tableSize: 10,
+            dbSize: 10
+        };
+        return {result: result}
+    }
 }

@@ -11,10 +11,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const sqlite3 = require("sqlite3");
 const BirdPromise = require("bluebird");
 const queries_enum_1 = require("./enums/queries.enum");
+const fs = require("fs");
 let backupDb;
 let backupTable;
+let dbPath;
 function init(directory, paths) {
     return __awaiter(this, void 0, void 0, function* () {
+        dbPath = directory;
         backupDb = new sqlite3.Database(directory, (err) => {
             if (err) {
                 throw err;
@@ -150,4 +153,27 @@ function getTotalPerCombo(path, method) {
     });
 }
 exports.getTotalPerCombo = getTotalPerCombo;
+function getDatabaseAnalytics() {
+    return __awaiter(this, void 0, void 0, function* () {
+        return new BirdPromise((resolve, reject) => {
+            backupDb.get(queries_enum_1._dbAnalytics, undefined, (err, row) => {
+                if (err) {
+                    reject(err);
+                }
+                const tableSize = (4 + 102 + 12 + 4) * (row.totalRoutes || 0);
+                const tableSizeMB = tableSize / 1000000.0;
+                const stats = fs.statSync(dbPath);
+                const dbSizeMB = stats.size / 1000000.0;
+                const result = {
+                    totalRows: row.totalRoutes,
+                    tracked: row.trackedRoutes,
+                    tableSize: tableSizeMB,
+                    dbSize: dbSizeMB
+                };
+                resolve({ result: result });
+            });
+        });
+    });
+}
+exports.getDatabaseAnalytics = getDatabaseAnalytics;
 //# sourceMappingURL=database.service.js.map

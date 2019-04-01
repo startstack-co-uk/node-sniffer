@@ -63,5 +63,17 @@ describe('main.ts', () => {
             expect(yield Main.getTotalPerPathMethodCombo('/', 'GET')).toEqual(result);
         }));
     });
+    describe('getDatabaseAnalytics', () => {
+        it('should return an object with stats about the database', () => __awaiter(this, void 0, void 0, function* () {
+            const result = { result: {
+                    totalRows: 4,
+                    tracked: 1,
+                    tableSize: 10,
+                    dbSize: 10
+                } };
+            jest.spyOn(Main, 'getDbAnalytics').mockImplementation(() => __awaiter(this, void 0, void 0, function* () { return yield mockDb.getDatabaseAnalytics(); }));
+            expect(yield Main.getDbAnalytics()).toEqual(result);
+        }));
+    });
 });
 //# sourceMappingURL=main.test.js.map

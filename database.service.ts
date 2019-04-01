@@ -1,9 +1,11 @@
 import * as sqlite3 from 'sqlite3';
 import * as BirdPromise from 'bluebird';
-import { _totalTracking, _totalPerMethod, _totalPerPath, _totalPerPathMethodCombo } from './enums/queries.enum';
+import { _totalTracking, _totalPerMethod, _totalPerPath, _totalPerPathMethodCombo, _dbAnalytics } from './enums/queries.enum';
+import  * as fs from 'fs';
 
 let backupDb;
 let backupTable;
+let dbPath: string;
 
 export interface RequestSchema{
     path: string;
@@ -17,7 +19,9 @@ interface DbEntrySchema{
 }
 
 
+
 export async function init (directory: string, paths: any[]){
+    dbPath = directory;
     backupDb = new sqlite3.Database(directory, (err) => {
         if(err){
             throw err;
@@ -145,6 +149,28 @@ export async function getTotalPerCombo(path: string, method: string): Promise<{r
                 reject(err);
             }
             resolve({result:rows});
+        })
+    })
+}
+
+
+export async function getDatabaseAnalytics(): Promise<{result:{totalRows:number, tracked:number, tableSize:number, dbSize:number}}>{
+    return new BirdPromise((resolve, reject) => {
+        backupDb.get(_dbAnalytics, undefined, (err, row) => {
+            if(err){
+                reject(err);
+            }
+            const tableSize: number = (4 + 102 + 12 + 4) * (row.totalRoutes || 0);
+            const tableSizeMB: number = tableSize / 1000000.0;  //size in megabytes
+            const stats = fs.statSync(dbPath);
+            const dbSizeMB: number = stats.size / 1000000.0;    //size in megabytes
+            const result = {
+                totalRows: row.totalRoutes,
+                tracked : row.trackedRoutes,
+                tableSize: tableSizeMB,
+                dbSize: dbSizeMB
+            };
+            resolve({result: result});
         })
     })
 }

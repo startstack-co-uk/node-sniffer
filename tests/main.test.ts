@@ -68,4 +68,18 @@ describe('main.ts', () => {
     })
 
 
+    describe('getDatabaseAnalytics', () => {
+      it('should return an object with stats about the database', async() => {
+        const result = {result:{
+            totalRows: 4,
+            tracked : 1,
+            tableSize: 10,
+            dbSize: 10
+        }};
+        jest.spyOn(Main, 'getDbAnalytics').mockImplementation(async() => { return await mockDb.getDatabaseAnalytics()});
+        expect(await Main.getDbAnalytics()).toEqual(result);
+      })
+    })
+
+
 })

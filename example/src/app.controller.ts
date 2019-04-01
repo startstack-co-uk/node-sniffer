@@ -1,6 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
-import { tracker, getAllRequests } from 'simple-request-tracker';
+import { tracker, getAllRequests, getDbAnalytics } from 'simple-request-tracker';
 
 @Controller()
 export class AppController {
@@ -16,4 +16,11 @@ export class AppController {
   async getAllRequestsTracked(): Promise<any>{
     return await getAllRequests();
   }
+
+
+  @Get('/dbStats')
+  async getDatabaseStats(): Promise<{result:{totalRows: number, tracked: number, tableSize: number, dbSize: number}}>{
+    return await getDbAnalytics();
+  }
+
 }

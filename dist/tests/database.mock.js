@@ -13,11 +13,15 @@ const _totalTracking = 'total';
 const _totalPerMethod = 'method';
 const _totalPerPath = 'path';
 const _totalPerPathMethodCombo = 'combo';
+const _dbAnalytics = 'db';
 const backupDb = {
     run: (query, args, fn) => {
         fn(undefined);
     },
     get: (query, args, fn) => {
+        if (query === 'db') {
+            fn(undefined, { trackedRoutes: 10, totalRoutes: 10 });
+        }
         fn(undefined, { result: [{ path: '/', method: 'GET', total: 10 }] });
     },
     all: (query, args, fn) => {
@@ -135,4 +139,23 @@ function getTotalPerCombo(path, method) {
     });
 }
 exports.getTotalPerCombo = getTotalPerCombo;
+function getDatabaseAnalytics() {
+    return __awaiter(this, void 0, void 0, function* () {
+        return new BirdPromise((resolve, reject) => {
+            backupDb.get(_dbAnalytics, undefined, (err, row) => {
+                if (err) {
+                    reject(err);
+                }
+                const result = {
+                    totalRows: 10,
+                    tracked: 10,
+                    tableSize: 10,
+                    dbSize: 10
+                };
+                resolve({ result: result });
+            });
+        });
+    });
+}
+exports.getDatabaseAnalytics = getDatabaseAnalytics;
 //# sourceMappingURL=database.mock.js.map
